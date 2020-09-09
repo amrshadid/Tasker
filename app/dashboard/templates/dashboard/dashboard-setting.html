@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+
+{% for panel in panel_setting %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="action-btn d-flex justify-content-start ">
+        <a class="btn btn-success btn-lg " role="button" href="/dashboard">
+          <i class="fa fa-arrow-left"></i>
+        </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="container-fluid">
+    <h1 class="text-center display-4">{{panel.name}}</h1>
+</div>
+<div class="container-fluid ">
+    <ul class="list-group ">
+      {% for member in panel_member %}
+        {%if member.user == panel.created_by %}
+        <li class="list-group-item list-group-item d-flex justify-content-between align-items-center m-1">
+            <h4 class="text-center text-dark badge-pill">{{member.user}}</h4>
+            <small id="emailHelp" class="form-text text-muted">Admin</small>
+          </li>
+        {%elif member.user != panel.created_by %}
+        <li class="list-group-item list-group-item d-flex justify-content-between align-items-center m-1">
+            <h4 class="text-center text-dark badge-pill">{{member.user}}</h4>
+            {% if user == panel.created_by %}
+            <a class="btn btn-outline-danger" role="button" href="/dashboard/deletemamber/{{panel.id}}/{{member.user.id}}/">
+              <i class="fa fa-trash-o"></i>
+            </a>
+            {% endif %}
+          </li>
+        {%endif%}
+    </ul>
+    {% endfor %}
+
+    {% if user == panel.created_by %}
+    <div class="d-flex justify-content-around p-3">
+      <button type="button" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#AddMermber">Add User +</button>
+    <form class="" action="/dashboard/delete/{{panel.panel.id}}/" method="post">
+      {% csrf_token %}
+      <button class="btn btn-lg  btn-outline-danger" type="submit"><i class="fa fa-trash-o"></i></button>
+    </form>
+    </div>
+    {%else %}
+    <small id="emailHelp" class="form-text text-muted">Just "{{panel.created_by}}" of panel can add member to {{panel.name}} dashboard </small>
+    {% endif %}
+
+
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="AddMermber" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title ">Add member</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form class="" action="/dashboard/addmermber/{{panel.id}}/" method="post">
+        <div class="modal-body">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address:</label>
+                <input type="email" class="form-control" name="username" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share email with other user's.</small>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success btn-default">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endfor %}
+{% endblock%}

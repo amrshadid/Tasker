@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container-fluid action-btn d-flex justify-content-end ">
+  <button type="button" class="btn btn-success btn-lg " data-toggle="modal" data-target="#myModal">Add dashbord +</button>
+</div>
+<div class="container-fluid dashborad">
+    <div class="row ">
+      {% for panel in all_items %}
+        <div class="col col-md-3">
+            <div class="panel bg-light p-4">
+                <div>
+                    <h5 class="text-center">{{panel.panel}}</h5>
+                </div>
+                <div class="d-flex justify-content-center"><a class="btn btn-outline-success btn-block" role="button" href="/task/list/{{panel.panel.id}}/">Open Dashborad</a></div>
+                <div class="d-flex justify-content-around p-4">
+                  <a class="btn btn-outline-dark btn-lg" role="button" href="setting/{{panel.panel.id}}/">
+                    <i class="fa fa-gears"></i>
+                  </a>
+                  {% if user == panel.panel.created_by %}
+                  <form class="" action="/dashboard/delete/{{panel.panel.id}}/" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-lg  btn-outline-danger" type="submit"><i class="fa fa-trash-o"></i></button>
+                  </form>
+                  {% endif %}
+                </div>
+                <div class="d-flex justify-content-around">
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container">
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title ">Add dashbord</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form class="" action="add/" method="post">
+            <div class="modal-body">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="Nmae">name:</label>
+                    <input type="text" class="form-control" name="name" placeholder="Managmant" required>
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success btn-default">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

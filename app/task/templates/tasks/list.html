@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+{% for p in panel %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="action-btn d-flex justify-content-start ">
+        <a class="btn btn-success btn-lg " role="button" href="/dashboard/">
+          <i class="fa fa-arrow-left"></i>
+        </a>
+          </div>
+        </div>
+        <div class="col">
+          <div class="action-btn d-flex justify-content-end ">
+            <button type="button" class="btn btn-success btn-lg " data-toggle="modal"  data-target="#Addtickets">Add ticket +</button>
+              </div>
+            </div>
+      </div>
+    </div>
+    <div class="dashbord container-fluid">
+        <div class="">
+            <div class="row">
+                <div class="col-md-3 list">
+                    <h4 class="text-capitalize text-center text-danger">Wating process</h4>
+                    <hr>
+                    {% for titket in all_items %}
+                    {% if titket.status == 1 %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{titket.title}}</h5>
+                            <a class="btn btn-success btn-lg d-flex justify-content-center" href="/task/get/{{p.id}}/{{titket.id}}">open Titket</a>
+
+                            <hr>
+                            <p>Open by&nbsp;<span class="text-primary">{{titket.created_by}}</span>&nbsp;:{{titket.created_at}} </p>
+                            <div class="d-flex justify-content-around ">
+
+                              <form>
+                                <input type="hidden" id="t" value="{{titket.title}}">
+                                <input type="hidden" id="c" value="{{titket.content}}">
+                                <input type="hidden" id="i" value="{{titket.id}}">
+                                <input type="hidden" id="p" value="{{p.id}}">
+                                <button type="button" class="btn btn-sm  btn-outline-primary" onclick="edit(t,c,i,p)" data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
+                              </form>
+
+
+                            <form class="" action="/task/delete/{{titket.id}}/{{p.id}}/" method="post">
+                              {% csrf_token %}
+                              <button class="btn btn-sm  btn-outline-danger" type="submit"><i class="fa fa-trash-o"></i></button>
+                            </form>
+
+                            <form class="" action="/task/update/{{titket.id}}/{{p.id}}/" method="post">
+                              {% csrf_token %}
+                              <button class="btn btn-sm  btn-outline-success" type="submit"><i class="fa fa-arrow-right"></i></button>
+                            </form>
+
+                          </div>
+                        </div>
+                    </div>
+                    <hr>
+                    {% endif %}
+                    {% endfor %}
+
+                </div>
+
+                <div class="col-md-3 list">
+                    <h4 class="text-capitalize text-center text-warning">under process</h4>
+                    <hr>
+                    {% for titket in all_items %}
+                    {% if titket.status == 2 %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{titket.title}}</h5>
+                            <a class="btn btn-success btn-lg d-flex justify-content-center" href="/task/get/{{p.id}}/{{titket.id}}">open Titket</a>
+                            <hr>
+                            <p>Open by&nbsp;<span class="text-primary">{{titket.created_by}}</span>&nbsp;:{{titket.created_at}} </p>
+                            <div class="d-flex justify-content-around ">
+                            <form class="" action="/task/back/{{titket.id}}/{{p.id}}/" method="post">
+                              {% csrf_token %}
+                              <button class="btn btn-sm  btn-outline-warning" type="submit"><i class="fa fa-arrow-left"></i></button>
+                            </form>
+
+                            <form>
+                              <input type="hidden" id="t" value="{{titket.title}}">
+                              <input type="hidden" id="c" value="{{titket.content}}">
+                              <input type="hidden" id="i" value="{{titket.id}}">
+                              <input type="hidden" id="p" value="{{p.id}}">
+                              <button type="button" class="btn btn-sm  btn-outline-primary" onclick="edit(t,c,i,p)" data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
+                            </form>
+
+
+                            <form class="" action="/task/delete/{{titket.id}}/{{p.id}}/" method="post">
+                              {% csrf_token %}
+                                <button class="btn btn-sm  btn-outline-danger" type="submit"><i class="fa fa-trash-o"></i></button>
+                            </form>
+
+                            <form class="" action="/task/update/{{titket.id}}/{{p.id}}/" method="post">
+                              {% csrf_token %}
+                                <button class="btn btn-sm  btn-outline-success" type="submit"><i class="fa fa-arrow-right"></i></button>
+                            </form>
+
+                          </div>
+                        </div>
+                    </div>
+                    <hr>
+                    {% endif %}
+                    {% endfor %}
+
+                </div>
+
+                <div class="col-md-3 list">
+                    <h4 class="text-capitalize text-center text-success">Done</h4>
+                    <hr>
+                  {% for titket in all_items %}
+                  {% if titket.status == 3 %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{titket.title}}</h5>
+                            <a class="btn btn-success btn-lg d-flex justify-content-center" href="/task/get/{{p.id}}/{{titket.id}}">open Titket</a>
+                            <hr>
+                            <p>Open by&nbsp;<span class="text-primary">{{titket.created_by}}</span>&nbsp;:{{titket.created_at}} </p>
+                            <div class="d-flex justify-content-around ">
+                            <form class="" action="/task/back/{{titket.id}}/{{p.id}}/" method="post">
+                              {% csrf_token %}
+                              <button class="btn btn-sm  btn-outline-warning" type="submit"><i class="fa fa-arrow-left"></i></button>
+                            </form>
+
+                            <form>
+                              <input type="hidden" id="t" value="{{titket.title}}">
+                              <input type="hidden" id="c" value="{{titket.content}}">
+                              <input type="hidden" id="i" value="{{titket.id}}">
+                              <input type="hidden" id="p" value="{{p.id}}">
+                              <button type="button" class="btn btn-sm  btn-outline-primary" onclick="edit(t,c,i,p)" data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
+                            </form>
+
+
+                            <form class="" action="/task/delete/{{titket.id}}/{{p.id}}/" method="post">
+                              {% csrf_token %}
+                                <button class="btn btn-sm  btn-outline-danger" type="submit"><i class="fa fa-trash-o"></i></button>
+                            </form>
+
+                            <form class="" action="/task/update/{{titket.id}}/{{p.id}}/" method="post">
+                              {% csrf_token %}
+                                <button class="btn btn-sm  btn-outline-success" type="submit"><i class="fa fa-arrow-right"></i></button>
+                            </form>
+
+                            </div>
+
+                          </div>
+                    </div>
+                    <hr>
+                    {% endif %}
+                    {% endfor %}
+
+                </div>
+
+                <div class="col-md-3 list">
+                  <h4 class="text-capitalize text-center text-info">Total</h4>
+                    <hr>
+                    {% for titket in all_items %}
+                    {% if titket.status == 4 %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{titket.title}}</h5>
+                            <a class="btn btn-success btn-lg d-flex justify-content-center" href="/task/get/{{p.id}}/{{titket.id}}">open Titket</a>
+                            <hr>
+                            <p>Open by&nbsp;<span class="text-primary">{{titket.created_by}}</span>&nbsp;:{{titket.created_at}} </p>
+                            <div class="d-flex justify-content-around ">
+                            <form class="" action="/task/back/{{titket.id}}/{{p.id}}/" method="post">
+                              {% csrf_token %}
+                              <button class="btn btn-sm btn-outline-warning" type="submit"><i class="fa fa-arrow-left"></i></button>
+                            </form>
+
+                            <form>
+                              <input type="hidden" id="t" value="{{titket.title}}">
+                              <input type="hidden" id="c" value="{{titket.content}}">
+                              <input type="hidden" id="i" value="{{titket.id}}">
+                              <input type="hidden" id="p" value="{{p.id}}">
+                              <button type="button" class="btn btn-sm  btn-outline-primary" onclick="edit(t,c,i,p)" data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
+                            </form>
+
+
+
+                            <form class="" action="/task/delete/{{titket.id}}/{{p.id}}/" method="post">
+                              {% csrf_token %}
+                                <button class="btn btn-sm  btn-outline-danger" type="submit"><i class="fa fa-trash-o"></i></button>
+                            </form>
+
+                            </div>
+
+                      </div>
+                    </div>
+                    <hr>
+                    {% endif %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+      <!-- Modal -->
+      <div class="modal fade" id="Addtickets" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title ">New Ticket</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+              {% for panel in panel %}
+            <form class="" id="AddFrom" action="/task/add/{{panel.id}}/" method="post">
+            <div class="modal-body">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="title">title:</label>
+                    <input type="text" class="form-control" name="title" placeholder="Do somthing" required>
+                  </div>
+                  <label for="content">content:</label>
+                  <textarea class="form-control" name="content" rows="10" required></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success btn-default">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <!-- Modal -->
+      <div class="modal fade" id="edit" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title ">Edit Task</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form class=""  id="EditFrom" action="edit/" method="POST">
+            <div class="modal-body">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="title">title:</label>
+                    <input type="text" class="form-control" name="title" id="nik" required>
+                  </div>
+                  <label for="content">content:</label>
+                  <textarea class="form-control" name="content" rows="10" id="discrption" required></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success btn-default">Save</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endfor%}
+{% endblock %}
