@@ -19,17 +19,18 @@ you must install **Django** and make **environment** the work ready
 
 
 ## UML diagrams
-```mermaid
+
+@startuml
 graph LR
-A[Dashboard]  --> B[Add dashboard]
-A--> C[Dashboard list]
-C-->D[ Open dashboard ]
-C-->E[Setting dashboard ]
-E -->F[Edit Member]
-E-->H[Delete dashboard ]
-D-->G[Ticket list]
-G-->I[Add ticket]
-G-->O[Manage ticket 'status']
-O-->W[Ticket details]
-W-->R[Add comments]
-```
+A[Dashboard]--> Add dashboard
+Dashboard--> Dashboard list
+Dashboard list-->Open dashboard
+Dashboard list-->Setting dashboard
+Setting dashboard -->Edit Member
+Setting dashboard-->Delete dashboard
+Open dashboard-->Ticket list
+Ticket list-->Add ticket
+Ticket list-->Manage ticket
+Manage ticket-->Ticket details
+Ticket details-->Add comments
+@enduml
