@@ -1,6 +1,8 @@
 # Welcome to Tasker!
 Tasker is a collaboration tool that **organizes your projects into boards**
-![](https://ibb.co/sJ2xLdX)
+
+![Tasker](https://user-images.githubusercontent.com/32217515/92676553-75473b80-f32a-11ea-946a-59680a0672d7.JPG)
+
 
 ## To make system ready
 you must install **Django** and make **environment** the work ready
@@ -18,19 +20,4 @@ you must install **Django** and make **environment** the work ready
 [Tasker](http://amrshadid.pythonanywhere.com)
 
 
-## UML diagrams
 
-@startuml
-graph LR
-A[Dashboard]--> Add dashboard
-Dashboard--> Dashboard list
-Dashboard list-->Open dashboard
-Dashboard list-->Setting dashboard
-Setting dashboard -->Edit Member
-Setting dashboard-->Delete dashboard
-Open dashboard-->Ticket list
-Ticket list-->Add ticket
-Ticket list-->Manage ticket
-Manage ticket-->Ticket details
-Ticket details-->Add comments
-@enduml
