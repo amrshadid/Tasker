@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-{% if user.is_authenticated %}
-<div class="container">
-  <h1>You are now logged in!</h1>
-  <h2><a href="/dashboard">Go to dashboard</a></h2>
-</div>
-{% endif %}
   <div class="container p-4" >
-    <h1 class="text-center display-4">Welcome to task manager </h1>
+    <h1 class="text-center display-3">Welcome to Tasker </h1>
     <hr>
-      <ul>
-        <li><h4>task manager </h4></li>
-        <li><h4>more visable  </h4></li>
-        <li><h4>task manager </h4></li>
-        <li><h4>task manager </h4></li>
-      </ul>
+    {% if user.is_authenticated %}
+    <div class="container">
+      <h3 class="display-4">Welcome {{user}}</h3>
+      <a class="btn btn-primry btn-lg btn-primary" href="/dashboard">Go to dashboard</a>
+    </div>
+    <hr>
+    {%else%}
+    <div class="container">
+      <h3 class="text-center display-4">The idea</h3>
+      <p class="font-italic">A system that manages tasks where more than one task board can be created, and each panel has a board manager who can add employees and share their tasks, and can modify the list of people allowed to see the board, as there is in each panel a task gallery where the task is opened and begins within the queue to move manually through one Employees to the list of "in progress" until the end, and each task has a special page that allows employees to add their comment on that task and print the job that can be modified in terms of content and status and until it is permanently deleted from the database</p>
+    </div>
+    {% endif %}
     </div>
 
 {% endblock %}
